@@ -8,15 +8,29 @@
 //         trustServerCertificate: true
 //     }
 // };
+const sql = require('mssql');
+
 const config = {
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    server: process.env.DB_SERVER, 
-    port: parseInt(process.env.DB_PORT, 10),
-    options: {
-        encrypt: true, // Railway uses encrypted connections
-        trustServerCertificate: false // Cambia a true si es necesario
-    }
+  user: process.env.MSSQL_USERNAME,
+  password: process.env.MSSQL_SA_PASSWORD,
+  server: process.env.MSSQL_SERVER, // Use the Railway host
+  database: 'YourDatabaseName', // Cambia esto al nombre de tu base de datos
+  port: parseInt(process.env.MSSQL_TCP_PORT, 10),
+  options: {
+    encrypt: true, // Usualmente es necesario en la nube
+    trustServerCertificate: true, // Para evitar errores SSL
+  }
 };
 
-module.exports = config;
+const poolPromise = new sql.ConnectionPool(config)
+  .connect()
+  .then(pool => {
+    console.log('Connected to SQL Server');
+    return pool;
+  })
+  .catch(err => console.log('Database connection failed: ', err));
+
+module.exports = {
+  sql,
+  poolPromise
+};

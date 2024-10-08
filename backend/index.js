@@ -1,6 +1,9 @@
+require('dotenv').config(); // Cargar variables de entorno
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const { poolPromise } = require('./db'); // Conexión a la base de datos
 
 const taskRoutes = require('./routes/taskRoutes');
 const stateRoutes = require('./routes/stateRoutes');
