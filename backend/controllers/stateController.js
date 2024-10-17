@@ -1,5 +1,5 @@
-const getConnection = require('../models/dbConnection');
 const sql = require('mssql');
+const { getConnection } = require('../config/db');
 
 async function initializeEstados() {
     try {
