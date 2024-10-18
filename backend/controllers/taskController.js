@@ -34,6 +34,7 @@ const createTask = async (req, res) => {
             .input('FechaVencimiento', sql.DateTime, FechaVencimiento)
             .input('EstadoId', sql.Int, EstadoId)
             .query('INSERT INTO Tareas (Titulo, Descripcion, FechaCreacion, FechaVencimiento, EstadoId) VALUES (@Titulo, @Descripcion, @FechaCreacion, @FechaVencimiento, @EstadoId)');
+
         res.status(201).send({ message: 'Tarea creada exitosamente' });
     } catch (err) {
         res.status(500).send({ message: `Error al guardar la tarea: ${err.message}` });
